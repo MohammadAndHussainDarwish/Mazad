@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f3ec">
+  <title>ديربي المزاد | تحدي المدربين</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Oxanium:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="ديربي المزاد">
+        <span class="brand-mark" aria-hidden="true">11</span>
+        <span class="brand-name">ديربي <b>المزاد</b></span>
+      </a>
+      <div class="topbar-note"><span class="live-dot"></span> تحدي المدربين <span class="note-divider">/</span> موسم الأحلام</div>
+      <button class="icon-button" id="sound-toggle" type="button" aria-label="تشغيل أو إيقاف الصوت" title="الصوت">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M17 9a5 5 0 0 1 0 6M19.5 6.5a9 9 0 0 1 0 11"/></svg>
+      </button>
+    </header>
+
+    <main>
+      <section class="setup-screen" id="setup-screen">
+        <div class="setup-copy">
+          <div class="eyebrow"><span class="eyebrow-line"></span> THE ULTIMATE DRAFT</div>
+          <h1>ابنِ فريقك.<br><span>واكسب المواجهة.</span></h1>
+          <p>11 جولة، 22 لاعبًا، ومدرب واحد يرفع الكأس.</p>
+          <div class="setup-meta"><span>ميزانية كل مدرب <b>8,000,000</b></span><span class="meta-separator"></span><span>كل مزايدة <b>+300,000</b></span></div>
+        </div>
+        <form class="setup-form" id="setup-form">
+          <div class="form-heading"><span>01 — قبل صافرة البداية</span><span class="heading-ball" aria-hidden="true">⚽</span></div>
+          <label class="field-label" for="manager-one">اسم المدرب الأول</label>
+          <div class="name-field team-one-field"><span class="team-emblem">01</span><input id="manager-one" maxlength="18" value="المدرب الأول" autocomplete="off"></div>
+          <label class="field-label" for="manager-two">اسم المدرب الثاني</label>
+          <div class="name-field team-two-field"><span class="team-emblem">02</span><input id="manager-two" maxlength="18" value="المدرب الثاني" autocomplete="off"></div>
+          <button class="primary-button" type="submit"><span>ابدأ المزاد</span><span class="button-arrow" aria-hidden="true">←</span></button>
+          <div class="form-foot"><span class="tiny-dot"></span> اللاعب البديل يذهب مجانًا إلى الخاسر</div>
+        </form>
+        <div class="setup-decoration" aria-hidden="true"><span>DERBY</span><span>01—22</span></div>
+      </section>
+
+      <section class="game-screen hidden" id="game-screen" aria-live="polite">
+        <div class="game-heading">
+          <div><div class="eyebrow"><span class="eyebrow-line"></span> LIVE AUCTION</div><h1>سوق الانتقالات</h1></div>
+          <div class="round-readout"><span>الجولة</span><strong id="round-number">01</strong><span class="round-total">/ 11</span><div class="round-track"><i id="round-progress"></i></div></div>
+        </div>
+
+        <div class="manager-strip" id="manager-strip"></div>
+
+        <div class="auction-layout">
+          <section class="auction-stage">
+            <div class="stage-topline"><span id="position-label">حارس المرمى</span><span id="position-index">المركز 01 من 11</span></div>
+            <div class="cards-row">
+              <div class="card-wrap auction-card-wrap"><div class="card-caption"><span class="caption-dot"></span> لاعب المزاد <span class="caption-tag">متاح</span></div><div id="auction-card"></div></div>
+              <div class="versus-mark" aria-hidden="true"><span>VS</span></div>
+              <div class="card-wrap reserve-card-wrap"><div class="card-caption"><span class="caption-dot reserve-dot"></span> البديل المجاني <span class="caption-tag reserve-tag">للخاسر</span></div><div id="reserve-card"></div></div>
+            </div>
+            <div class="auction-console">
+              <div class="bid-status"><span id="bid-label">المزايدة الافتتاحية</span><strong id="bid-value">300,000</strong></div>
+              <div class="bid-turn"><span class="turn-pulse"></span><span id="turn-label">بانتظار البداية</span></div>
+              <div class="bid-actions"><button class="pass-button" id="pass-button" type="button">تمرير</button><button class="bid-button" id="bid-button" type="button"><span id="bid-button-label">زايد 300 ألف</span><span class="bid-plus" aria-hidden="true">+</span></button></div>
+              <div class="bid-help" id="bid-help">كل مزايدة جديدة ترفع السعر 300,000</div>
+              <section class="trade-picker hidden" id="trade-picker" aria-live="polite">
+                <h3 id="trade-picker-title"></h3>
+                <div class="trade-player-options" id="trade-player-options"></div>
+                <button class="trade-decline" id="trade-decline" type="button">رفض التبديل</button>
+              </section>
+            </div>
+          </section>
+
+          <aside class="squad-panel">
+            <div class="squad-panel-heading"><h2>لوحة المدربين</h2><span class="live-label"><i></i> مباشر</span></div>
+            <div class="squad-list" id="squad-list"></div>
+            <div class="score-hint"><span class="hint-mark">★</span><span>الأقوى يُحسم بتقييم التشكيلة وتوازنها.</span></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="result-screen hidden" id="result-screen" aria-live="polite">
+        <div class="result-kicker"><span class="trophy-mark" aria-hidden="true">♛</span> صافرة النهاية</div>
+        <h1 id="winner-title">كأس ديربي المزاد</h1>
+        <p class="result-subtitle">اكتملت التشكيلتان. وهذه نتيجة المواجهة.</p>
+        <div class="result-scoreboard" id="result-scoreboard"></div>
+        <div class="result-explain">نقاط الفريق = 70% متوسط تقييم اللاعبين + 20% أفضل خمسة لاعبين + 10% أضعف لاعب.</div>
+        <div class="result-actions"><button class="primary-button" id="rematch-button" type="button"><span>إعادة المواجهة</span><span class="button-arrow" aria-hidden="true">↻</span></button><button class="secondary-button" id="names-button" type="button">تغيير أسماء المدربين</button></div>
+      </section>
+    </main>
+    <footer class="site-footer"><span>DERBY AUCTION CLUB</span><span>تشكيلة من 11 لاعبًا · مدربان · كأس واحد</span><span>EST. 2025</span></footer>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
